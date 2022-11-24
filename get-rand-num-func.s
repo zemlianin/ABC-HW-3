@@ -1,34 +1,30 @@
-	.file	"get-rand-num-func.c"
 	.intel_syntax noprefix
 	.text
 	.globl	Rand
-	.type	Rand, @function
+	.type	Rand, @function		# Объявление функции
 Rand:
 	endbr64
-	push	rbp
+	push	rbp			# Начало функции
 	mov	rbp, rsp
 	sub	rsp, 32
-	mov	QWORD PTR -24[rbp], rdi
-	mov	DWORD PTR -28[rbp], esi
-	mov	DWORD PTR -4[rbp], 0
-	mov	rax, QWORD PTR -24[rbp]
-	mov	rdi, rax
-	call	atoi@PLT
-	mov	DWORD PTR -4[rbp], eax
-	mov	eax, DWORD PTR -4[rbp]
-	mov	edi, eax
-	call	srand@PLT
+	
+	mov	QWORD PTR -24[rbp], rdi	# Запись переменной арг в стек
+	mov	DWORD PTR -28[rbp], esi # Запись рэнч в стек
+	mov	DWORD PTR -4[rbp], 0	# переменная н = 0
+	mov	rdi, QWORD PTR -24[rbp] # Запись арг в регистр
+	call	atoi@PLT 		# Запуск  функции
+	mov	DWORD PTR -4[rbp], eax # Запись результата обратно в эн
+	mov	edi, DWORD PTR -4[rbp] #  Запись эн в регситр
+	call	srand@PLT		#  Запуск ранд и сранд
 	call	rand@PLT
-	cdq
-	idiv	DWORD PTR -28[rbp]
-	mov	eax, edx
+	idiv	DWORD PTR -28[rbp]	#  Деление результата на рэндж
+	mov	eax, edx	#  Перевод инта в дабл
 	pxor	xmm1, xmm1
-	cvtsi2sd	xmm1, eax
-	movsd	xmm0, QWORD PTR .LC0[rip]
-	mulsd	xmm0, xmm1
-	movq	rax, xmm0
-	movq	xmm0, rax
-	leave
+	cvtsi2sd	xmm1, eax	
+	movsd	xmm0, QWORD PTR .LC0[rip]	#  Запись 0.00001 в регистр
+	mulsd	xmm0, xmm1			#  Перемножение
+	movq	rax, xmm0			#  Запись результата 
+	leave					#  Конец
 	ret
 	.size	Rand, .-Rand
 	.section	.rodata
@@ -36,21 +32,3 @@ Rand:
 .LC0:
 	.long	-1998362383
 	.long	1055193269
-	.ident	"GCC: (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
-	.section	.note.GNU-stack,"",@progbits
-	.section	.note.gnu.property,"a"
-	.align 8
-	.long	1f - 0f
-	.long	4f - 1f
-	.long	5
-0:
-	.string	"GNU"
-1:
-	.align 8
-	.long	0xc0000002
-	.long	3f - 2f
-2:
-	.long	0x3
-3:
-	.align 8
-4:
