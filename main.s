@@ -39,7 +39,7 @@ main:
 	mov	DWORD PTR -116[rbp], edi	# Запись арк в стек
 	mov	QWORD PTR -128[rbp], rsi	#  Запись указателя на аргв в стек
 	mov	DWORD PTR -20[rbp], 0
-	lea	rdi, .LC0[rip]			# Запись стркои в регистр
+	lea	rdi, .LC0[rip]			# Запись строки в регистр
 	call	puts@PLT			# Вызов принт
 	lea	rsi, -96[rbp]			# Вызов метода скан
 	lea	rdi, .LC1[rip]	
