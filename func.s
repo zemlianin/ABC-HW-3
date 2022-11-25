@@ -6,22 +6,22 @@ Task:
 	push	rbp
 	mov	rbp, rsp # Начало функции, перемещение регистров
 	
-	movsd	QWORD PTR -24[rbp], xmm0 # Запись х в стек
+	movsd	xmm3, xmm0 # Запись х в регистр
 	 
 	mulsd	xmm0, xmm0 		# Возведение х в квадрат 
-	mulsd	xmm0, QWORD PTR -24[rbp]	# Возведение в куб
+	mulsd	xmm0, xmm3	# Возведение в куб
 	movsd	xmm1, QWORD PTR .LC0[rip] 	# Запись чила 6 в регситр
 	divsd	xmm0, xmm1			# Деление х куб на 6
 	movapd	xmm1, xmm0
-	addsd	xmm1, QWORD PTR -24[rbp] 	# Прибавление к предыдущему резуьтату х
-	movsd	xmm2, QWORD PTR -24[rbp]	
+	addsd	xmm1, xmm3 	# Прибавление к предыдущему резуьтату х
+	movsd	xmm2, xmm3	
 	movsd	xmm0, QWORD PTR .LC1[rip]	# Запись 3 в регистр
 	
 	mulsd	xmm0, xmm2		# Возведение х в 5ую степень
-	mulsd	xmm0, QWORD PTR -24[rbp]
-	mulsd	xmm0, QWORD PTR -24[rbp]
-	mulsd	xmm0, QWORD PTR -24[rbp]
-	mulsd	xmm0, QWORD PTR -24[rbp]
+	mulsd	xmm0, xmm3
+	mulsd	xmm0, xmm3
+	mulsd	xmm0, xmm3
+	mulsd	xmm0, xmm3
 	
 	movsd	xmm2, QWORD PTR .LC2[rip]
 	divsd	xmm0, xmm2			# Деление х в пятой на 40
